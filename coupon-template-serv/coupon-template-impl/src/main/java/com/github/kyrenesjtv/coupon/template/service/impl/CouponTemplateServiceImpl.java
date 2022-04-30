@@ -1,4 +1,4 @@
-package com.github.kyrenesjtv.coupon.template.service;
+package com.github.kyrenesjtv.coupon.template.service.impl;
 
 import com.github.kyrenesjtv.coupon.template.api.beans.CouponTemplateInfo;
 import com.github.kyrenesjtv.coupon.template.api.beans.PagedCouponTemplateInfo;
@@ -7,7 +7,7 @@ import com.github.kyrenesjtv.coupon.template.api.enums.CouponType;
 import com.github.kyrenesjtv.coupon.template.converter.CouponTemplateConverter;
 import com.github.kyrenesjtv.coupon.template.dao.CouponTemplateDao;
 import com.github.kyrenesjtv.coupon.template.dao.entity.CouponTemplate;
-import com.github.kyrenesjtv.coupon.template.service.intf.CouponTemplateService;
+import com.github.kyrenesjtv.coupon.template.service.CouponTemplateService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;

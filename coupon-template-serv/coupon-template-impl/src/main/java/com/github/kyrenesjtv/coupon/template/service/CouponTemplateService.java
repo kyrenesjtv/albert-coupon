@@ -1,4 +1,4 @@
-package com.github.kyrenesjtv.coupon.template.service.intf;
+package com.github.kyrenesjtv.coupon.template.service;
 
 
 import com.github.kyrenesjtv.coupon.template.api.beans.CouponTemplateInfo;
