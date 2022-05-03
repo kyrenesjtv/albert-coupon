@@ -1,4 +1,4 @@
-package com.github.kyrenesjtv.coupon.customer.service;
+package com.github.kyrenesjtv.coupon.customer.converter;
 
 
 import com.github.kyrenesjtv.coupon.customer.dao.entity.Coupon;
