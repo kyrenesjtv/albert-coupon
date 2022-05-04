@@ -30,6 +30,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static com.github.kyrenesjtv.coupon.customer.constant.Constant.TRAFFIC_VERSION;
+
 @Slf4j
 @Service
 public class CouponCustomerServiceImpl implements CouponCustomerService {
@@ -126,6 +128,7 @@ public class CouponCustomerServiceImpl implements CouponCustomerService {
         CouponTemplateInfo templateInfo = webClientBuilder.build()
                 .get()
                 .uri("http://coupon-template-serv/template/getTemplate?id=" + request.getCouponTemplateId())
+                .header(TRAFFIC_VERSION,request.getTrafficVersion())
                 .retrieve()
                 .bodyToMono(CouponTemplateInfo.class)
                 .block();
