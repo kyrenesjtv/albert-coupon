@@ -72,3 +72,5 @@ spring:
 logging:
   level:
     com.broadview.coupon: debug
+    com.github.kyrenesjtv.coupon.customer.feign.TemplateService: debug
+    com.github.kyrenesjtv.coupon.customer.feign.CalculationService: debug
