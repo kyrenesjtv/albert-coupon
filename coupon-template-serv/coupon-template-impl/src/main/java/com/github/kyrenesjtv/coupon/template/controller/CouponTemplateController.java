@@ -13,7 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -47,9 +49,14 @@ public class CouponTemplateController {
 
     // 批量获取
     @GetMapping("/getBatch")
-    @SentinelResource(value = "getTemplateInBatch",blockHandler = "getTemplateInBatch_block")
+    @SentinelResource(value = "getTemplateInBatch",blockHandler = "getTemplateInBatch_block",fallback = "getTemplateInBatch_back")//blockHandler只针对BlockException，fallback针对RuntiomException
     public Map<Long, CouponTemplateInfo> getTemplateInBatch(@RequestParam("ids") Collection<Long> ids) {
         log.info("get TemplateInBatch: {}", JSON.toJSONString(ids));
+        //抛出runtionException
+        if(ids.size() > 2){
+            List<Integer> integers = new ArrayList<>();
+            Integer integer = integers.get(10);
+        }
         return couponTemplateService.getTemplateInfoMap(ids);
     }
 
@@ -69,6 +76,9 @@ public class CouponTemplateController {
 
     public Map<Long, CouponTemplateInfo> getTemplateInBatch_block( Collection<Long> ids, BlockException exception) {
         log.info("getTemplateInBatch接口被限流"); return Maps.newHashMap();
+    }
+    public Map<Long, CouponTemplateInfo> getTemplateInBatch_back( Collection<Long> ids) {
+        log.info("getTemplateInBatch接口被降级"); return Maps.newHashMap();
     }
 
     public CouponTemplateInfo getTemplate_block( Long id, BlockException exception) {
