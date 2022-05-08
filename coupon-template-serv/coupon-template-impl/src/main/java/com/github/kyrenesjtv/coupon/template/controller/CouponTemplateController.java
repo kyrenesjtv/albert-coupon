@@ -1,10 +1,13 @@
 package com.github.kyrenesjtv.coupon.template.controller;
 
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
+import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.alibaba.fastjson.JSON;
 import com.github.kyrenesjtv.coupon.template.api.beans.CouponTemplateInfo;
 import com.github.kyrenesjtv.coupon.template.api.beans.PagedCouponTemplateInfo;
 import com.github.kyrenesjtv.coupon.template.api.beans.TemplateSearchParams;
 import com.github.kyrenesjtv.coupon.template.service.CouponTemplateService;
+import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -36,6 +39,7 @@ public class CouponTemplateController {
 
     // 读取优惠券
     @GetMapping("/getTemplate")
+    @SentinelResource(value = "getTemplate",blockHandler = "getTemplate_block")
     public CouponTemplateInfo getTemplate(@RequestParam("id") Long id){
         log.info("get template, id={}", id);
         return couponTemplateService.loadTemplateInfo(id);
@@ -43,6 +47,7 @@ public class CouponTemplateController {
 
     // 批量获取
     @GetMapping("/getBatch")
+    @SentinelResource(value = "getTemplateInBatch",blockHandler = "getTemplateInBatch_block")
     public Map<Long, CouponTemplateInfo> getTemplateInBatch(@RequestParam("ids") Collection<Long> ids) {
         log.info("get TemplateInBatch: {}", JSON.toJSONString(ids));
         return couponTemplateService.getTemplateInfoMap(ids);
@@ -60,5 +65,13 @@ public class CouponTemplateController {
     public void deleteTemplate(@RequestParam("id") Long id){
         log.info("deleye template, id={}", id);
         couponTemplateService.deleteTemplate(id);
+    }
+
+    public Map<Long, CouponTemplateInfo> getTemplateInBatch_block( Collection<Long> ids, BlockException exception) {
+        log.info("getTemplateInBatch接口被限流"); return Maps.newHashMap();
+    }
+
+    public CouponTemplateInfo getTemplate_block( Long id, BlockException exception) {
+        log.info("getTemplate接口被限流"); return null;
     }
 }
