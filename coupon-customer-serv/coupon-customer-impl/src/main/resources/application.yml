@@ -74,15 +74,15 @@ spring:
         port: 8719
         # dashboard地址
         dashboard: localhost:8080
-      datasource:
-        # 限流的规则key是flow
-        geekbang-flow:
-          nacos:
-            server-addr: localhost:8848
-            namespace: dev
-            groupId: SENTINEL_GROUP
-            dataId: ${spring.application.name}-flow-rules
-            rule-type: flow
+#      datasource:
+#        # 限流的规则key是flow
+#        geekbang-flow:
+#          nacos:
+#            server-addr: localhost:8848
+#            namespace: dev
+#            groupId: SENTINEL_GROUP
+#            dataId: ${spring.application.name}-flow-rules
+#            rule-type: flow
 
 logging:
   level:
