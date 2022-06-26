@@ -36,6 +36,7 @@ public class CouponCustomerController {
             log.info("暂停领取优惠券");
             return null;
         }
+        log.info("测试sleuth");
         return customerService.requestCoupon(request);
     }
 
