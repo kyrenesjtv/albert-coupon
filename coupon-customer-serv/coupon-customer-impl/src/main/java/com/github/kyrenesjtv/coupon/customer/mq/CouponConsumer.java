@@ -57,4 +57,13 @@ public class CouponConsumer {
 
         throw new RuntimeException("打到死信队列");
     }
+
+    // 消费失败后触发一段降级流程
+    // 如果设置了多次本地重试，那么只有最后一次重试失败才会执行这段降级流程
+    @ServiceActivator(inputChannel = "delete-coupon-topic.delete-coupon-group.errors")
+    public void deleteCouponFallback(ErrorMessage errorMessage) throws Exception {
+        log.info("consumer deleteCoupon error: {}", errorMessage);
+
+//        throw new RuntimeException("打到死信队列");
+    }
 }
