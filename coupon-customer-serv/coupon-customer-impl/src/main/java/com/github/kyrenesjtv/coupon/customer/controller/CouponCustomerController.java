@@ -6,6 +6,7 @@ import com.github.kyrenesjtv.coupon.calculation.api.beans.SimulationResponse;
 import com.github.kyrenesjtv.coupon.customer.api.beans.RequestCoupon;
 import com.github.kyrenesjtv.coupon.customer.api.beans.SearchCoupon;
 import com.github.kyrenesjtv.coupon.customer.dao.entity.Coupon;
+import com.github.kyrenesjtv.coupon.customer.mq.CouponProducer;
 import com.github.kyrenesjtv.coupon.customer.service.CouponCustomerService;
 import com.github.kyrenesjtv.coupon.template.api.beans.CouponInfo;
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +31,9 @@ public class CouponCustomerController {
     @Autowired
     private CouponCustomerService customerService;
 
+    @Autowired
+    private CouponProducer couponProducer;
+
     @PostMapping("requestCoupon")
     public Coupon requestCoupon(@Valid @RequestBody RequestCoupon request) {
         if(disableCoupon){
@@ -45,6 +49,23 @@ public class CouponCustomerController {
     public void deleteCoupon(@RequestParam("userId") Long userId,
                                        @RequestParam("couponId") Long couponId) {
         customerService.deleteCoupon(userId, couponId);
+    }
+
+
+    @PostMapping("requestCouponEvent")
+    public void requestCouponEvent(@Valid @RequestBody RequestCoupon request) {
+        couponProducer.sendCoupon(request);
+    }
+
+    @PostMapping("requestCouponDelayEvent")
+    public void requestCouponDelayedEvent(@Valid @RequestBody RequestCoupon request) {
+        couponProducer.sendCouponInDelay(request);
+    }
+    // 用户删除优惠券
+    @DeleteMapping("deleteCouponEvent")
+    public void deleteCouponEvent(@RequestParam("userId") Long userId,
+                                  @RequestParam("couponId") Long couponId) {
+        couponProducer.deleteCoupon(userId, couponId);
     }
 
     // 用户模拟计算每个优惠券的优惠价格
