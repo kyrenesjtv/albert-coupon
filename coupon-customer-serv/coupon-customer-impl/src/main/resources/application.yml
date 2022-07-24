@@ -112,14 +112,14 @@ spring:
           consumer:
             # 如果最大尝试次数为1，即不重试
             # 默认是做3次尝试
-            max-attempts: 1
+            max-attempts: 3
             # 两次重试之间的初始间隔
             backOffInitialInterval: 2000
             # 重试最大间隔
             backOffMaxInterval: 10000
             # 每次重试后，间隔时间乘以的系数
             backOffMultiplier: 2
-            # 如果某个异常你不想重试，写在这里
+            # 如果某个异常你不想重试，写在这里。false代表不进行重试
         #            retryableExceptions:
         #              java.lang.IllegalArgumentException: false
         # 延迟发券 - producer
@@ -151,7 +151,7 @@ spring:
           binder: my-rabbit
           # 最大尝试次数为1，如果不设置的话，默认是做3次尝试
           consumer:
-            max-attempts: 1
+            max-attempts: 3
       function:
         definition: addCoupon;deleteCoupon;addCouponDelay
       rabbit:
