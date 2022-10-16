@@ -7,4 +7,5 @@ public interface CouponDao extends JpaRepository<Coupon, Long> {
 
     long countByUserIdAndTemplateId(Long userId, Long templateId);
 
+//    void deleteCouponInBatch(Long templateId, CouponStatus inactive);
 }

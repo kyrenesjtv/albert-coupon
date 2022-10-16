@@ -186,6 +186,15 @@ public class CouponCustomerServiceImpl implements CouponCustomerService {
         return checkoutInfo;
     }
 
+    @Override
+    @Transactional
+    public void deleteCouponTemplate(Long templateId) {
+        templateService.deleteTemplate(templateId);
+//        couponDao.deleteCouponInBatch(templateId, CouponStatus.INACTIVE);
+
+        throw new RuntimeException("AT分布式事务挂球了");
+    }
+
     // 逻辑删除优惠券
     @Override
     public void deleteCoupon(Long userId, Long couponId) {

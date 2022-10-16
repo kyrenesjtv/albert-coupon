@@ -9,6 +9,7 @@ import com.github.kyrenesjtv.coupon.customer.dao.entity.Coupon;
 import com.github.kyrenesjtv.coupon.customer.mq.CouponProducer;
 import com.github.kyrenesjtv.coupon.customer.service.CouponCustomerService;
 import com.github.kyrenesjtv.coupon.template.api.beans.CouponInfo;
+import io.seata.spring.annotation.GlobalTransactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -66,6 +67,12 @@ public class CouponCustomerController {
     public void deleteCouponEvent(@RequestParam("userId") Long userId,
                                   @RequestParam("couponId") Long couponId) {
         couponProducer.deleteCoupon(userId, couponId);
+    }
+    // 用户删除优惠券
+    @DeleteMapping("template")
+    @GlobalTransactional(name = "coupon-customer-serv", rollbackFor = Exception.class)
+    public void deleteTemplate(@RequestParam("templateId") Long templateId) {
+        customerService.deleteCouponTemplate(templateId);
     }
 
     // 用户模拟计算每个优惠券的优惠价格
